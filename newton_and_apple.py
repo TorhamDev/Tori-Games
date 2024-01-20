@@ -9,12 +9,18 @@ screen = pygame.display.set_mode((720, 900))
 clock = pygame.time.Clock()
 running = True
 player_sepeed = 5
+apple = pygame.image.load("./apple.png")
+newton = pygame.image.load("./apple.png")
 
 enemy_speed = -2
 enemy_y = 10
 enemy_x = 0
-player_pos =  pygame.Rect(500, 30, 60, 60)
-enemy_rec = pygame.Rect(enemy_y, enemy_x, 20, 20)
+player_image = pygame.image.load("./newton.png")
+player_image = pygame.transform.scale(player_image, (80, 80))
+player_pos = player_image.get_rect()
+enemy_image = pygame.image.load("./apple.png")
+enemy_image = pygame.transform.scale(enemy_image, (40, 40))
+enemy_rec = enemy_image.get_rect()
 lifes = 10
 score = 0
 screen_rec = screen.get_rect()
@@ -33,8 +39,8 @@ while running:
 
         screen.blit(my_font.render(f'Lifes : {lifes}', False, (255, 0, 0)), (0,0))
         screen.blit(my_font.render(f'Score : {score}', False, (0, 255, 0)), (0,24))
-        pygame.draw.rect(screen, "red", player_pos)
-        pygame.draw.rect(screen, "blue", enemy_rec)
+        screen.blit(player_image, player_pos)
+        screen.blit(enemy_image, enemy_rec)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
             player_pos.y -= player_sepeed
