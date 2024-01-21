@@ -9,9 +9,7 @@ screen = pygame.display.set_mode((720, 900))
 clock = pygame.time.Clock()
 running = True
 player_sepeed = 5
-apple = pygame.image.load("./apple.png")
-newton = pygame.image.load("./apple.png")
-
+bg = pygame.image.load("./bg.png")
 enemy_speed = -2
 enemy_y = 10
 enemy_x = 0
@@ -26,13 +24,12 @@ score = 0
 screen_rec = screen.get_rect()
 is_over = False
 while running:
-
+    screen.blit(bg, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
 
-    screen.fill("black")
     if not is_over:
         if lifes <= 0:
             is_over = True
