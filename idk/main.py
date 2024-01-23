@@ -44,20 +44,23 @@ while running:
             pygame.mixer.Sound.play(crash_sound)
             pygame.mixer.music.stop()
             rect.move_left = False
-
+            rect.speed = random.randint(1, 10)
+            
         if rect.rect.x >= 360:
             pygame.mixer.Sound.play(crash_sound)
             pygame.mixer.music.stop()
             rect.move_left = True
+            rect.speed = random.randint(1, 10)
+
         
         if rect.move_left:
             rect.rect.x -= rect.speed
-            rect.speed = random.randint(1, 10)
+
 
 
         if rect.move_left is False:
             rect.rect.x += rect.speed
-            rect.speed = random.randint(1, 10)
+
 
 
 
