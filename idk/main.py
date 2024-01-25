@@ -12,7 +12,7 @@ rect1 = pygame.Rect(80, 80, 40, 40)
 rect2 = pygame.Rect(130, 20, 40, 40)
 rect3 = pygame.Rect(180, 140, 40, 40)
 rect4 = pygame.Rect(220, 190, 40, 40)
-crash_sound = pygame.mixer.Sound("idk/s.mp3")
+crash_sound = pygame.mixer.Sound("./s.mp3")
 
 dt = 0
 move_letf = False
