@@ -1,5 +1,5 @@
 import pygame
-
+import random
 
 pygame.init()
 pygame.font.init()
@@ -24,6 +24,21 @@ bullets = []
 def shoot(screen, x, y):
     bullet = pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(x + 42, y, 1, 20))
     bullets.append(bullet)
+
+def random_enemes(n: int) -> tuple[list, list]:
+    en = []
+    enms = []
+    for _ in range(n):
+        rock = pygame.transform.scale(pygame.image.load("./assets/rook.png"), (80, 80)).convert_alpha()
+        r = rock.get_rect()
+        r.x = random.randint(70, 600)
+        r.y = 4
+        en.append(r)
+        enms.append(rock)
+
+    return en, enms
+
+enemes_rect, enemes_image = random_enemes(4)
 score = 0
 while running:
 
@@ -34,7 +49,13 @@ while running:
     jet_rect.y = 800
     jet_rect.clamp_ip(screen.get_rect())
     screen.blit(jet, jet_rect)
-    enemy = pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(42, 4, 40, 40))
+    for en, enms in zip(enemes_rect, enemes_image):
+        if en.y >= 900:
+            enemes_rect.remove(en)
+        en.y += random.randint(1, 3)
+        
+        screen.blit(enms, en)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -57,19 +78,22 @@ while running:
     if keys[pygame.K_d]:
         x += 5 + dt
 
-    print(jet_rect.x)
-
+    print(bullets)
     for bullet in bullets:
         pygame.draw.rect(screen, (255, 0, 0), bullet)
         bullet.y -= 4
-        if bullet.colliderect(enemy):
-            print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
-            score += 1
-            bullets.remove(bullet)
+        for e in enemes_rect:
+            if bullet.colliderect(e):
+                print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+                score += 1
+                bullets.remove(bullet)
+                enemes_rect.remove(e)
         if bullet.y <= 10:
             bullets.remove(bullet)
         print(bullet.y)
 
+    if len(enemes_rect) <= 0:
+        enemes_rect = random_enemes(4)
     print(f"{score=}")
     pygame.display.flip()
 
